@@ -1,0 +1,192 @@
+\def\mytitle{ASSIGNMENT-1}
+\def\mykeywords{}
+\def\myauthor{SIVA PARVATHI TUNGALA}
+\def\contact{tvssn143@gmail.com}
+\def\mymodule{Future Wireless Comunnication (FWC22089)}
+% #######################################
+% #### YOU DON'T NEED TO TOUCH BELOW ####
+% #######################################
+\documentclass[10pt, a4paper]{article}
+\usepackage[a4paper,outer=1.5cm,inner=1.5cm,top=1.75cm,bottom=1.5cm]{geometry}
+\twocolumn
+\usepackage[latin1]{inputenc}
+\usepackage{graphicx}
+\graphicspath{{./images/}}
+%colour our links, remove weird boxes
+\usepackage[colorlinks,linkcolor={black},citecolor={blue!80!black},urlcolor={blue!80!black}]{hyperref}
+%Stop indentation on new paragraphs
+\usepackage[parfill]{parskip}
+%% Arial-like font
+\usepackage{lmodern}
+\renewcommand*\familydefault{\sfdefault}
+%Napier logo top right
+\usepackage{watermark}
+%Lorem Ipusm dolor please don't leave any in you final report ;)
+\usepackage{karnaugh-map}
+\usepackage{tabularx}
+\usepackage{lipsum}
+\usepackage{xcolor}
+\usepackage{listings}
+\usepackage{enumerate}
+%give us the Capital H that we all know and love
+\usepackage{float}
+%tone down the line spacing after section titles
+\usepackage{titlesec}
+%Cool maths printing
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+%PseudoCode
+\usepackage{tikz}
+%\documentclass[tikz, border=2mm]{standalone}
+\usepackage{circuitikz}
+\usetikzlibrary{calc}
+\usepackage{algorithm2e}
+
+\titlespacing{\subsection}{0pt}{\parskip}{-3pt}
+\titlespacing{\subsubsection}{0pt}{\parskip}{-\parskip}
+\titlespacing{\paragraph}{0pt}{\parskip}{\parskip}
+\newcommand{\figuremacro}[5]{
+    \begin{figure}[#1]
+        \centering
+        \includegraphics[width=#5\columnwidth]{#2}
+        \caption[#3]{\textbf{#3}#4}
+        \label{fig:#2}
+    \end{figure}
+}
+
+\lstset{
+frame=single, 
+breaklines=true,
+columns=fullflexible
+}
+
+\thiswatermark{\centering \put(1,-110.0){\includegraphics[scale=0.053]{logo}} 
+ \put(430,-115){\includegraphics[scale=0.4]{nrc logo}} }
+
+\title{\mytitle}
+\author{\myauthor\hspace{1em}\\\contact\\IITH\hspace{0.5em}-\hspace{0.5em}\mymodule}
+\date{}
+\hypersetup{pdfauthor=\myauthor,pdftitle=\mytitle,pdfkeywords=\mykeywords}
+\sloppy
+
+
+% #######################################
+% ########### START FROM HERE ###########
+% #######################################
+\begin{document}
+   
+	\maketitle
+	\tableofcontents
+	\section{Abstract}
+	   The objective of this manual is to draw a logic circuit realization using only NOR gates for the output Y in terms of three inputs A,B and C are given in below truth table.
+	   \\
+	   \begin{center}
+\begin{tabularx}{0.4\textwidth} { 
+  | >{\centering\arraybackslash}X 
+  | >{\centering\arraybackslash}X 
+  | >{\centering\arraybackslash}X
+  | >{\centering\arraybackslash}X | }
+\hline
+\textbf{C} &\textbf{B} & \textbf{A} & \textbf{Y} \\
+\hline
+0 & 0 & 0 & 1 \\  
+\hline
+0 & 0 & 1 & 1 \\ 
+\hline
+0 & 1 & 0 & 1 \\
+\hline
+0 & 1 & 1 & 0 \\
+\hline
+1 & 0 & 0 & 1 \\  
+\hline
+1 & 0 & 1 & 0 \\ 
+\hline
+1 & 1 & 0 & 0 \\
+\hline
+1 & 1 & 1& 0\\
+\hline
+\end{tabularx}
+\end{center}
+\begin{center}
+    Table 1
+\end{center}
+	
+
+\section{Components}
+\begin{tabularx}{0.45\textwidth} { 
+  | >{\centering\arraybackslash}X 
+  | >{\centering\arraybackslash}X
+  | >{\centering\arraybackslash}X | }
+\hline
+\textbf{Component} & \textbf{Value} & \textbf{Quantity} \\      
+\hline
+Arduino & UNO & 1 \\
+\hline
+Led & - & 1\\
+\hline
+Breadboard & - & 1\\
+\hline
+Jumper Wires & - & 7\\
+\hline
+\end{tabularx}
+\begin{center}
+    Table 1.0
+\end{center}
+	
+	\subsection{Arduino}
+	\hspace{10cm}
+	
+	The Arduino UNO has some ground pins, analog input pins A0-A3 and digital pins D1-D13 that can be used for both input as well as output. It also has two power pins that can generate 3.3V and 5V.In the following exercises, only the GND, 5V and digital pins will be used.
+	\section{Implementation}
+	\subsection{Karunugh Map}
+    \hspace{10cm}
+    
+      
+      \begin{center}
+     \begin{karnaugh-map}[4][2][1][$BC$][$A$]
+        \minterms{0,1,2,4}
+        \maxterms{3,5,6,7}
+        \implicant{0}{1}
+        \implicantedge{0}{0}{2}{2}
+        \implicantedge{0}{0}{4}{4}
+    \end{karnaugh-map} \\
+   \centering\large Y=A'B'+B'C'+C'A'
+     \begin{center}
+        figure 2.1
+        \end{center}
+    \end{center}    
+    
+    \section{Logic Circuit}
+	\begin{circuitikz} \draw
+	(0,0) node[nor port] (mynor3){}
+	(0,2) node[nor port] (mynor2){}
+	(0,4) node[nor port] (mynor1){}
+	(2,2) node[nor port,number inputs=3] (mynor4){}
+	(4,2) node[nor port] (mynor5){}
+	(mynor1.out) -- (mynor4.in 1)
+	(mynor2.out) -- (mynor4.in 2)
+	(mynor3.out) -- (mynor4.in 3)
+	(mynor4.out) -- (mynor5.in 1)
+	(mynor4.out) -- (mynor5.in 2);	
+	\node[left] at (mynor1.in 1) {\(A\)};
+	\node[left] at (mynor1.in 2) {\(B\)};
+	\node[left] at (mynor2.in 1) {\(B\)};
+	\node[left] at (mynor2.in 2) {\(C\)};
+	\node[left] at (mynor3.in 1) {\(A\)};
+	\node[left] at (mynor3.in 2) {\(C\)};	
+	\node[right] at (mynor5.out) {\(Y=A'B'+B'C'+C'A'\)};
+	\end{circuitikz}
+		
+	\section{Hardware}
+	\begin{enumerate}[1.]
+\item Connect the Arduino to the computer.
+\item Download the following directory
+\begin{lstlisting}
+https://github.com/sivaparvathi-tungala/fwc_module_1/blob/main/assign1_asm/codes/ass1.asm
+\end{lstlisting}
+%\item Now select Tools $\to$ Port $\to$ /dev/ttyACM0
+\end{enumerate}
+
+\bibliographystyle{ieeetr}
+\end{document}
